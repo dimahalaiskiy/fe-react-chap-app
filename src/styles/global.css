@@ -1,0 +1,21 @@
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #191c1f;
+}
+
+button {
+  padding: 0;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+}
