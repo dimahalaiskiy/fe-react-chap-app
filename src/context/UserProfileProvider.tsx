@@ -1,4 +1,6 @@
-import React, { createContext, ReactNode, useState } from 'react';
+import React, { createContext, ReactNode, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../services/api/core';
 
 interface UserProfileProviderI {
   children: ReactNode;
@@ -14,7 +16,9 @@ interface UserProfileContextI {
   setUserProfile: (userProfile: UserProfileI) => void;
 }
 
-const UserProfileContext = createContext<UserProfileContextI | null>(null);
+export const UserProfileContext = createContext<UserProfileContextI | null>(
+  null
+);
 
 export const UserProfileProvider: React.FC<UserProfileProviderI> = ({
   children,
@@ -23,6 +27,22 @@ export const UserProfileProvider: React.FC<UserProfileProviderI> = ({
     nickname: '',
     isLoggedIn: false,
   });
+
+  const navigate = useNavigate();
+
+  const getUserSession = async () => {
+    try {
+      const { data } = await api.post('/auth/protected');
+      console.log('data', data);
+    } catch (error) {
+      setUserProfile({ nickname: '', isLoggedIn: false });
+      navigate('/login');
+    }
+  };
+
+  useEffect(() => {
+    getUserSession();
+  }, []);
 
   return (
     <UserProfileContext.Provider value={{ userProfile, setUserProfile }}>

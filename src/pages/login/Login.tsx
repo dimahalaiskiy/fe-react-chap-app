@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { emailValidator } from '../../utils/helpers/validateEmail';
@@ -19,15 +19,19 @@ export const Login: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const isValidForm = emailValidator(email) && password.length >= 3;
+  const isValidForm = emailValidator(email) && password.length >= 1;
 
   const registerUser = async () => {
     setIsLoading(true);
     try {
-      const data = await api.post('/auth/login', {
+      const { data } = await api.post('/auth/login', {
         email,
         password,
       });
+      console.log('data', data);
+      if (data === 'OK') {
+        navigate('/home');
+      }
     } catch (error) {
       console.log('error', error);
     } finally {
@@ -59,11 +63,16 @@ export const Login: React.FC = () => {
           errorMessage='max length is 16 symbols'
           setValue={(e) => setPassword(e.currentTarget.value)}
         />
-        <Button disabled={!isValidForm} onClick={registerUser} text='Join'>
+        <Button
+          margin='18px 0px 0px 0px'
+          disabled={!isValidForm}
+          onClick={registerUser}
+          text='Join'
+        >
           {isLoading && <Spinner margin='0px 0px 0px 20px' />}
         </Button>
         <Text>
-          <span>New User?</span>
+          <span>Are You a New Member?</span>
           <Link to='/register'>Register Here</Link>
         </Text>
       </Wrapper>

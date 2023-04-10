@@ -7,6 +7,7 @@ interface ButtonI {
   text?: string;
   onClick?: any;
   children?: ReactNode;
+  margin?: string;
 }
 
 export const Button: React.FC<ButtonI> = ({
@@ -14,9 +15,10 @@ export const Button: React.FC<ButtonI> = ({
   text,
   onClick,
   children,
+  margin,
 }) => {
   return (
-    <ButtonStyled disabled={disabled} onClick={onClick}>
+    <ButtonStyled margin={margin} disabled={disabled} onClick={onClick}>
       <span>{text}</span>
       {children}
     </ButtonStyled>

@@ -32,6 +32,7 @@ class ErrorBoundary extends Component<Props, State> {
           {/* <Typography>Something went wrong.</Typography> */}
           <Button>
             <Link to='/home'>Go back to the home page</Link>
+            <p>sdasdsaasasdsa</p>
           </Button>
         </ErrorBoundaryWrapper>
       );

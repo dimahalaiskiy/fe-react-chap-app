@@ -9,15 +9,15 @@ import { Home } from './pages/home/Home';
 export const App = () => {
   return (
     <ErrorBoundary>
-      <UserProfileProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <UserProfileProvider>
           <Routes>
             <Route path='/' element={<Home />}></Route>
             <Route path='/login' element={<Login />}></Route>
-            <Route path='/signup' element={<SignUp />}></Route>
+            <Route path='/register' element={<SignUp />}></Route>
           </Routes>
-        </BrowserRouter>
-      </UserProfileProvider>
+        </UserProfileProvider>
+      </BrowserRouter>
     </ErrorBoundary>
   );
 };
