@@ -1,15 +1,8 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
-type AxiosConfig = AxiosRequestConfig & {
-  baseURL: string | undefined;
-};
-
-const createAxiosInstance = (config: AxiosConfig): AxiosInstance => {
-  return axios.create(config);
-};
-
-const api = createAxiosInstance({
+const axiosInstance: AxiosInstance = axios.create({
   baseURL: process.env.API_URL || 'http://localhost:3001/api/v1',
+  withCredentials: true,
 });
 
-export default api;
+export default axiosInstance;

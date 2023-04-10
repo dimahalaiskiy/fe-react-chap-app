@@ -8,11 +8,11 @@ interface UserProfileProviderI {
 
 interface UserProfileI {
   nickname: string;
-  isLoggedIn: boolean;
 }
 
 interface UserProfileContextI {
   userProfile: UserProfileI;
+  isLoggedIn: boolean;
   setUserProfile: (userProfile: UserProfileI) => void;
 }
 
@@ -25,17 +25,19 @@ export const UserProfileProvider: React.FC<UserProfileProviderI> = ({
 }) => {
   const [userProfile, setUserProfile] = useState({
     nickname: '',
-    isLoggedIn: false,
   });
+  const [isLoggedIn, setIsloggedIn] = useState(false);
 
   const navigate = useNavigate();
 
   const getUserSession = async () => {
     try {
       const { data } = await api.post('/auth/protected');
-      console.log('data', data);
+      setUserProfile(data.user.nickname);
+      setIsloggedIn(true);
+      navigate('/home');
     } catch (error) {
-      setUserProfile({ nickname: '', isLoggedIn: false });
+      setIsloggedIn(false);
       navigate('/login');
     }
   };
@@ -45,7 +47,9 @@ export const UserProfileProvider: React.FC<UserProfileProviderI> = ({
   }, []);
 
   return (
-    <UserProfileContext.Provider value={{ userProfile, setUserProfile }}>
+    <UserProfileContext.Provider
+      value={{ userProfile, setUserProfile, isLoggedIn }}
+    >
       {children}
     </UserProfileContext.Provider>
   );
