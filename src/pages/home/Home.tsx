@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 export const Home = () => {
   const data = useContext(UserProfileContext);
 
-  return (
-    <>
-      <Link to='/login'>Login</Link>
-    </>
-  );
+  console.log('data', data);
+  if(!data) {
+    return <div>Loading</div>
+  }
+  return <></>;
 };

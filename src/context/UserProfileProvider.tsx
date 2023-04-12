@@ -35,7 +35,7 @@ export const UserProfileProvider: React.FC<UserProfileProviderI> = ({
       const { data } = await api.post('/auth/protected');
       setUserProfile(data.user.nickname);
       setIsloggedIn(true);
-      navigate('/home');
+      navigate('/');
     } catch (error) {
       setIsloggedIn(false);
       navigate('/login');
