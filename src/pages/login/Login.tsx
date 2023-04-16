@@ -36,7 +36,7 @@ export const Login: React.FC = () => {
         document.cookie = cookies[0];
       }
       if (response.data === 'OK') {
-        navigate('/home');
+        navigate('/');
       }
     } catch (error) {
       console.log('error', error);

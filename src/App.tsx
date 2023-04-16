@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom';
-import ErrorBoundary from './hoc/ErrorBoundary';
+import ErrorBoundary from './hoc/ErrorBoundary/ErrorBoundary';
 import { UserProfileProvider } from './context/UserProfileProvider';
 
 import { Login } from './pages/login/Login';
