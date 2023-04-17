@@ -39,12 +39,6 @@ export const Login: React.FC = () => {
         email,
         password,
       });
-      console.log('data', response);
-      const cookies = response.headers['set-cookie'];
-      console.log('cookies', cookies);
-      if (cookies !== undefined) {
-        document.cookie = cookies[0];
-      }
       if (response.data === 'OK') {
         navigate('/');
       }
