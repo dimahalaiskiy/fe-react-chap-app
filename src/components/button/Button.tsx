@@ -4,6 +4,7 @@ import { ButtonStyled } from './Button.styles';
 
 interface ButtonI {
   disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   text?: string;
   onClick?: any;
   children?: ReactNode;
@@ -13,12 +14,18 @@ interface ButtonI {
 export const Button: React.FC<ButtonI> = ({
   disabled,
   text,
+  type,
   onClick,
   children,
   margin,
 }) => {
   return (
-    <ButtonStyled margin={margin} disabled={disabled} onClick={onClick}>
+    <ButtonStyled
+      type={type}
+      margin={margin}
+      disabled={disabled}
+      onClick={onClick}
+    >
       <span>{text}</span>
       {children}
     </ButtonStyled>
