@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 import { emailValidator } from '../../utils/helpers/validateEmail';
 import api from '../../services/api/core';
@@ -22,6 +21,17 @@ export const Login: React.FC = () => {
 
   const isValidForm = emailValidator(email) && password.length >= 1;
 
+  const handleSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    registerUser();
+  };
+
+  const handleInputKeyDown = (event: any) => {
+    event.preventDefault();
+    if (event.key === 'Enter') {
+      handleSubmit(event);
+    }
+  };
   const registerUser = async () => {
     setIsLoading(true);
     try {
@@ -29,12 +39,6 @@ export const Login: React.FC = () => {
         email,
         password,
       });
-      console.log('data', response);
-      const cookies = response.headers['set-cookie'];
-      console.log('cookies', cookies);
-      if (cookies !== undefined) {
-        document.cookie = cookies[0];
-      }
       if (response.data === 'OK') {
         navigate('/');
       }
@@ -47,7 +51,7 @@ export const Login: React.FC = () => {
 
   return (
     <Layout>
-      <Wrapper>
+      <Wrapper onSubmit={(e: FormEvent) => handleInputKeyDown(e)}>
         <Input
           type='email'
           margin='0px 0px 18px 0px'
@@ -70,6 +74,7 @@ export const Login: React.FC = () => {
           setValue={(e) => setPassword(e.currentTarget.value)}
         />
         <Button
+          type='submit'
           margin='18px 0px 0px 0px'
           disabled={!isValidForm}
           onClick={registerUser}
