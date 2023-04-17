@@ -13,7 +13,6 @@ const axiosInstance: AxiosInstance = axios.create({
   httpAgent: agent,
   headers: {
     'Content-Type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
     SameSite: 'none',
   },
 });
