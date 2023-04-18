@@ -35,7 +35,8 @@ export const Text = styled.div`
         #9a74f1 122.91%
       );
       background-clip: text;
-      -webkit-text-fill-color: transparent; /* For Safari */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       color: transparent;
     }
   }
