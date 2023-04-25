@@ -32,10 +32,7 @@ export const InputStyled = styled.input<ErrorProps>`
   max-height: 60px;
   height: 62px;
   background-color: transparent;
-  border: ${({ error }) =>
-    error
-      ? '1px solid rgba(235, 87, 87, 0.16);'
-      : '1px solid rgba(255, 255, 255, 0.08)'};
+  border: ${({ error }) => (error ? '1px solid rgba(235, 87, 87, 0.16);' : '1px solid rgba(255, 255, 255, 0.08)')};
   border-radius: 8px;
   outline: none;
   font-weight: 600;
@@ -43,9 +40,6 @@ export const InputStyled = styled.input<ErrorProps>`
   line-height: 18px;
   color: #ffffff;
   :focus {
-    border: ${({ error }) =>
-      error
-        ? '1px solid rgba(235, 87, 87, 0.16);'
-        : '1px solid rgba(255, 255, 255, 0.16)'};
+    border: ${({ error }) => (error ? '1px solid rgba(235, 87, 87, 0.16);' : '1px solid rgba(255, 255, 255, 0.16)')};
   }
 `;

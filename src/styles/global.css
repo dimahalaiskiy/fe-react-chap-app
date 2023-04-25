@@ -3,10 +3,12 @@ html {
 }
 
 body {
+  margin: 0;
   background-color: #191c1f;
 }
 
 button {
+  margin: 0;
   padding: 0;
   background-color: transparent;
   outline: none;
@@ -18,4 +20,9 @@ h1,
 h2,
 h3 {
   margin: 0;
+}
+
+a {
+  color: white;
+  text-decoration: none;
 }

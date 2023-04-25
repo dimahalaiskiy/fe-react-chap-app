@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 
-import { InputWrapper, InputStyled, Label, ErrorTip } from './Input.styles';
+import { InputWrapper, InputStyled, Label, ErrorTip } from './input.styles';
 
 interface InputProps {
   type?: string | undefined;
@@ -27,12 +27,7 @@ export const Input: React.FC<InputProps> = ({
         {label}
         {error ? <ErrorTip>{errorMessage}</ErrorTip> : ''}
       </Label>
-      <InputStyled
-        error={error}
-        type={type}
-        value={value}
-        onChange={setValue}
-      />
+      <InputStyled error={error} type={type} value={value} onChange={setValue} />
     </InputWrapper>
   );
 };

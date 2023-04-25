@@ -1,29 +1,26 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-import { emailValidator } from '../../utils/helpers/validateEmail';
 import api from '../../services/api/core';
+import { emailValidator } from '../../utils/helpers/validateEmail';
 
-import { Layout } from '../../layout/Layout';
-import { Wrapper } from './Signup.styles';
+import { Form } from './signup.styles';
 import { Input } from '../../components/input/Input';
 import { Button } from '../../components/button/Button';
-import { Text } from '../login/Login.styles';
+import { Wrapper, Text } from '../login/login.styles';
 import Spinner from '../../components/spinner/Spinner';
 
 export const SignUp: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState(true);
   const [password, setPassword] = useState('');
   const [repeatedPassword, setRepeatedPassword] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(true);
   const [isMatchedPassword, setIsMatchPasswords] = useState(true);
 
   const navigate = useNavigate();
-  const handleChangeRepeatedPassword = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangeRepeatedPassword = (event: ChangeEvent<HTMLInputElement>) => {
     setRepeatedPassword(event.currentTarget.value);
     if (password !== event.currentTarget.value) {
       setIsMatchPasswords(false);
@@ -32,8 +29,7 @@ export const SignUp: React.FC = () => {
     }
   };
 
-  const isValidForm =
-    nickname.length > 1 && emailValidator(email) && isMatchedPassword;
+  const isValidForm = nickname.length > 1 && emailValidator(email) && isMatchedPassword;
 
   const registerUser = async () => {
     setIsLoading(true);
@@ -54,8 +50,8 @@ export const SignUp: React.FC = () => {
   };
 
   return (
-    <Layout>
-      <Wrapper>
+    <Wrapper>
+      <Form>
         <Input
           margin='0px 0px 18px 0px'
           label='nickname'
@@ -94,19 +90,14 @@ export const SignUp: React.FC = () => {
           errorMessage="doesn't match"
           setValue={handleChangeRepeatedPassword}
         />
-        <Button
-          margin='18px 0px 0px 0px'
-          disabled={!isValidForm}
-          onClick={registerUser}
-          text='Sign up'
-        >
+        <Button margin='18px 0px 0px 0px' disabled={!isValidForm} onClick={registerUser} text='Sign up'>
           {isLoading && <Spinner margin='0px 0px 0px 20px' />}
         </Button>
         <Text>
           <span>Already has account?</span>
           <Link to='/login'>Log In Here</Link>
         </Text>
-      </Wrapper>
-    </Layout>
+      </Form>
+    </Wrapper>
   );
 };

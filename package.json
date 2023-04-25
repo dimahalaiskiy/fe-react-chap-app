@@ -16,7 +16,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
     "styled-components": "^5.3.9",
-    "typeface-inter": "^3.18.1"
+    "typeface-inter": "^3.18.1",
+    "vite-plugin-svgr": "^2.4.0"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^5.0.2",
