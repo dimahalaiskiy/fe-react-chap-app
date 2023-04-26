@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { ErrorBoundaryWrapper } from './ErrorBoundary.styles';
+import { ErrorBoundaryWrapper } from './errorBoundary.styled';
 import { Button } from '../../components/button/Button';
 import { Link } from 'react-router-dom';
 
