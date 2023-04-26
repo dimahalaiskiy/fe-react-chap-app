@@ -9,7 +9,7 @@ import { Input } from '../../components/input/Input';
 import { Button } from '../../components/button/Button';
 import Spinner from '../../components/spinner/Spinner';
 
-import { Wrapper, Form, Text } from './login.styles';
+import { Wrapper, Form, Text } from './login.styled';
 
 export const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { LayoutWrapper } from './layout.styles';
+import { LayoutWrapper } from './layout.styled';
 import { Header } from '../components/header/Header';
 import { AuthContext } from '../context/AuthProvider';
 

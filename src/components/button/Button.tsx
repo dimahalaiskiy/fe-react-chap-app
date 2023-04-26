@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { ButtonStyled } from './button.styles';
+import { ButtonStyled } from './button.styled';
 
 interface ButtonProps {
   disabled?: boolean;

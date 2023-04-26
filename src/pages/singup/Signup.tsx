@@ -7,7 +7,7 @@ import { emailValidator } from '../../utils/helpers/validateEmail';
 import { Form } from './signup.styles';
 import { Input } from '../../components/input/Input';
 import { Button } from '../../components/button/Button';
-import { Wrapper, Text } from '../login/login.styles';
+import { Wrapper, Text } from '../login/login.styled';
 import Spinner from '../../components/spinner/Spinner';
 
 export const SignUp: React.FC = () => {

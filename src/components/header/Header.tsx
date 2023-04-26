@@ -5,7 +5,7 @@ import api from '../../services/api/core';
 
 import { AuthContext } from '../../context/AuthProvider';
 
-import { HeaderWrapper, HeaderLinkWrapper, HeaderLinkContent, LogoutButton } from './header.styles';
+import { HeaderWrapper, HeaderLinkWrapper, HeaderLinkContent, LogoutButton } from './header.styled';
 import { ReactComponent as ProfileIcon } from '../../assets/profile.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
 

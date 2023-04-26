@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 
-import { InputWrapper, InputStyled, Label, ErrorTip } from './input.styles';
+import { InputWrapper, InputStyled, Label, ErrorTip } from './input.styled';
 
 interface InputProps {
   type?: string | undefined;
