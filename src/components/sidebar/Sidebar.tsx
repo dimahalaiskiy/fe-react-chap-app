@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SidebarHeading, SidebarWrapper } from './sidebar.styles';
+import { SidebarHeading, SidebarWrapper } from './sidebar.styled';
 
 interface Sidebar {}
 
