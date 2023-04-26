@@ -1,15 +1,15 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { emailValidator } from '../../utils/helpers/validateEmail';
 import api from '../../services/api/core';
+import { AuthContext } from '../../context/AuthProvider';
 
-import { Layout } from '../../layout/Layout';
 import { Input } from '../../components/input/Input';
 import { Button } from '../../components/button/Button';
 import Spinner from '../../components/spinner/Spinner';
 
-import { Wrapper, Text } from './Login.styles';
+import { Wrapper, Form, Text } from './login.styled';
 
 export const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,7 @@ export const Login: React.FC = () => {
   const [isValidEmail, setIsValidEmail] = useState(true);
 
   const navigate = useNavigate();
-
+  const { setIsAuthenticated } = useContext(AuthContext) as AuthContext;
   const isValidForm = emailValidator(email) && password.length >= 1;
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
@@ -32,6 +32,7 @@ export const Login: React.FC = () => {
       handleSubmit(event);
     }
   };
+
   const registerUser = async () => {
     setIsLoading(true);
     try {
@@ -40,18 +41,20 @@ export const Login: React.FC = () => {
         password,
       });
       if (response.data === 'OK') {
+        setIsAuthenticated(true);
         navigate('/');
       }
     } catch (error) {
       console.log('error', error);
+      setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Layout>
-      <Wrapper onSubmit={(e: FormEvent) => handleInputKeyDown(e)}>
+    <Wrapper>
+      <Form onSubmit={(e: FormEvent) => handleInputKeyDown(e)}>
         <Input
           type='email'
           margin='0px 0px 18px 0px'
@@ -73,20 +76,14 @@ export const Login: React.FC = () => {
           errorMessage='max length is 16 symbols'
           setValue={(e) => setPassword(e.currentTarget.value)}
         />
-        <Button
-          type='submit'
-          margin='18px 0px 0px 0px'
-          disabled={!isValidForm}
-          onClick={registerUser}
-          text='Join'
-        >
+        <Button type='submit' margin='18px 0px 0px 0px' disabled={!isValidForm} onClick={registerUser} text='Join'>
           {isLoading && <Spinner margin='0px 0px 0px 20px' />}
         </Button>
         <Text>
           <span>Are You a New Member?</span>
           <Link to='/register'>Register Here</Link>
         </Text>
-      </Wrapper>
-    </Layout>
+      </Form>
+    </Wrapper>
   );
 };

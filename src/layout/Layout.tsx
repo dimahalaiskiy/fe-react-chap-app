@@ -1,10 +1,18 @@
-import React from 'react';
-import { LayoutWrapper } from './Layout.styles';
+import React, { useContext } from 'react';
+import { LayoutWrapper } from './layout.styled';
+import { Header } from '../components/header/Header';
+import { AuthContext } from '../context/AuthProvider';
 
-type Props = {
+interface Layout {
   children: JSX.Element;
-};
+}
 
-export const Layout: React.FC<Props> = ({ children }) => {
-  return <LayoutWrapper>{children}</LayoutWrapper>;
+export const Layout: React.FC<Layout> = ({ children }) => {
+  const { isAuthenticated } = useContext(AuthContext) as AuthContext;
+  return (
+    <LayoutWrapper>
+      {isAuthenticated && <Header />}
+      {children}
+    </LayoutWrapper>
+  );
 };
