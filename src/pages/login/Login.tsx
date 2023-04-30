@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 
 import { emailValidator } from '../../utils/helpers/validateEmail';
 import api from '../../services/api/core';
@@ -18,7 +18,7 @@ export const Login: React.FC = () => {
   const [isValidEmail, setIsValidEmail] = useState(true);
 
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useContext(AuthContext) as AuthContext;
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext) as AuthContext;
   const isValidForm = emailValidator(email) && password.length >= 1;
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
@@ -51,6 +51,10 @@ export const Login: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  if (isAuthenticated) {
+    return <Navigate to='/' replace />;
+  }
 
   return (
     <Wrapper>
