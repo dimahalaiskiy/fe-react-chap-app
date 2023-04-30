@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from 'react';
+import React, { createContext, ReactNode, useState } from "react";
 
 interface UserProfileProviderI {
   children: ReactNode;
@@ -13,12 +13,20 @@ export interface UserProfileContextI {
   setUserProfile: (userProfile: UserProfileI) => void;
 }
 
-export const UserProfileContext = createContext<UserProfileContextI | null>(null);
+export const UserProfileContext = createContext<UserProfileContextI | null>(
+  null
+);
 
-export const UserProfileProvider: React.FC<UserProfileProviderI> = ({ children }) => {
+export const UserProfileProvider: React.FC<UserProfileProviderI> = ({
+  children,
+}) => {
   const [userProfile, setUserProfile] = useState({
-    nickname: '',
+    nickname: "",
   });
 
-  return <UserProfileContext.Provider value={{ userProfile, setUserProfile }}>{children}</UserProfileContext.Provider>;
+  return (
+    <UserProfileContext.Provider value={{ userProfile, setUserProfile }}>
+      {children}
+    </UserProfileContext.Provider>
+  );
 };

@@ -1,7 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { Sidebar } from '../../components/sidebar/Sidebar';
-
-import api from '../../services/api/core';
+import React from "react";
+import { Sidebar } from "../../components/sidebar/Sidebar";
 
 export const Chats = () => {
   return (

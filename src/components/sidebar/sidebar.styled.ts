@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const SidebarWrapper = styled.div`
   width: 320px;
@@ -12,7 +12,7 @@ export const SidebarHeading = styled.h3`
   padding-top: 15px;
   text-align: center;
   width: 100%;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-weight: 600;
   font-size: 16px;
   line-height: 28px;
