@@ -9,5 +9,7 @@ interface PathRouteProps {
 export const PrivateRoute: React.FC<PathRouteProps> = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext) as AuthContext;
 
+  if (isAuthenticated === null) return <></>;
+
   return isAuthenticated ? <>{children}</> : <Navigate to='/login' replace />;
 };
