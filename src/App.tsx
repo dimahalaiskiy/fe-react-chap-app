@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ErrorBoundary from './hoc/error-boundary/ErrorBoundary';
 import { AuthProvider } from './context/AuthProvider';
 import { UserProfileProvider } from './context/UserProfileProvider';
+import { PrivateRoute } from './hoc/private-route/PrivateRoute';
 
 import { NotFound } from './pages/not-found/NotFound';
 import { Layout } from './layout/Layout';
@@ -18,25 +19,29 @@ export const App = () => {
         <AuthProvider>
           <UserProfileProvider>
             <Routes>
-              <Route path='/login' element={<Login />}></Route>
-              <Route path='/register' element={<SignUp />}></Route>
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<SignUp />} />
               <Route
                 path='/'
                 element={
-                  <Layout>
-                    <Chats />
-                  </Layout>
+                  <PrivateRoute>
+                    <Layout>
+                      <Chats />
+                    </Layout>
+                  </PrivateRoute>
                 }
-              ></Route>
+              />
               <Route
                 path='/profile'
                 element={
-                  <Layout>
-                    <Profile />
-                  </Layout>
+                  <PrivateRoute>
+                    <Layout>
+                      <Profile />
+                    </Layout>
+                  </PrivateRoute>
                 }
-              ></Route>
-              <Route path='*' element={<NotFound />}></Route>
+              />
+              <Route path='*' element={<NotFound />} />
             </Routes>
           </UserProfileProvider>
         </AuthProvider>
