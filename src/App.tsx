@@ -1,16 +1,16 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import ErrorBoundary from './hoc/error-boundary/ErrorBoundary';
-import { AuthProvider } from './context/AuthProvider';
-import { UserProfileProvider } from './context/UserProfileProvider';
-import { PrivateRoute } from './hoc/private-route/PrivateRoute';
+import ErrorBoundary from "./hoc/error-boundary/ErrorBoundary";
+import { AuthProvider } from "./context/AuthProvider";
+import { UserProfileProvider } from "./context/UserProfileProvider";
+import { PrivateRoute } from "./hoc/private-route/PrivateRoute";
 
-import { NotFound } from './pages/not-found/NotFound';
-import { Layout } from './layout/Layout';
-import { Login } from './pages/login/Login';
-import { SignUp } from './pages/singup/Signup';
-import { Chats } from './pages/chats/Chats';
-import { Profile } from './pages/profile/Profile';
+import { NotFound } from "./pages/not-found/NotFound";
+import { Layout } from "./layout/Layout";
+import { Login } from "./pages/login/Login";
+import { SignUp } from "./pages/singup/Signup";
+import { Chats } from "./pages/chats/Chats";
+import { Profile } from "./pages/profile/Profile";
 
 export const App = () => {
   return (
@@ -19,10 +19,10 @@ export const App = () => {
         <AuthProvider>
           <UserProfileProvider>
             <Routes>
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<SignUp />} />
               <Route
-                path='/'
+                path="/"
                 element={
                   <PrivateRoute>
                     <Layout>
@@ -32,7 +32,7 @@ export const App = () => {
                 }
               />
               <Route
-                path='/profile'
+                path="/profile"
                 element={
                   <PrivateRoute>
                     <Layout>
@@ -41,7 +41,7 @@ export const App = () => {
                   </PrivateRoute>
                 }
               />
-              <Route path='*' element={<NotFound />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </UserProfileProvider>
         </AuthProvider>

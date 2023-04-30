@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { SpinnerProps } from './Spinner';
+import styled from "styled-components";
+import { SpinnerProps } from "./Spinner";
 
 export const SpinnerContainer = styled.div<SpinnerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: ${({ margin }) => margin || '0px'};
+  margin: ${({ margin }) => margin || "0px"};
 `;
 
 export const SpinnerStyled = styled.span`

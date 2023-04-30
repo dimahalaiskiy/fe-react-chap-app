@@ -1,6 +1,6 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent } from "react";
 
-import { InputWrapper, InputStyled, Label, ErrorTip } from './input.styled';
+import { InputWrapper, InputStyled, Label, ErrorTip } from "./input.styled";
 
 interface InputProps {
   type?: string | undefined;
@@ -13,9 +13,9 @@ interface InputProps {
 }
 
 export const Input: React.FC<InputProps> = ({
-  type = 'text',
+  type = "text",
   error,
-  errorMessage = 'error',
+  errorMessage = "error",
   value,
   setValue,
   label,
@@ -25,9 +25,14 @@ export const Input: React.FC<InputProps> = ({
     <InputWrapper style={{ margin: margin }}>
       <Label error={error}>
         {label}
-        {error ? <ErrorTip>{errorMessage}</ErrorTip> : ''}
+        {error ? <ErrorTip>{errorMessage}</ErrorTip> : ""}
       </Label>
-      <InputStyled error={error} type={type} value={value} onChange={setValue} />
+      <InputStyled
+        error={error}
+        type={type}
+        value={value}
+        onChange={setValue}
+      />
     </InputWrapper>
   );
 };

@@ -1,7 +1,7 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { ErrorBoundaryWrapper } from './errorBoundary.styled';
-import { Button } from '../../components/button/Button';
-import { Link } from 'react-router-dom';
+import React, { Component, ErrorInfo, ReactNode } from "react";
+import { ErrorBoundaryWrapper } from "./errorBoundary.styled";
+import { Button } from "../../components/button/Button";
+import { Link } from "react-router-dom";
 
 interface Props {
   children: ReactNode;
@@ -31,7 +31,7 @@ class ErrorBoundary extends Component<Props, State> {
         <ErrorBoundaryWrapper>
           {/* <Typography>Something went wrong.</Typography> */}
           <Button>
-            <Link to='/home'>Go back to the home page</Link>
+            <Link to="/home">Go back to the home page</Link>
             <p>sdasdsaasasdsa</p>
           </Button>
         </ErrorBoundaryWrapper>

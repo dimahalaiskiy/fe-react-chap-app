@@ -1,5 +1,9 @@
-import React from 'react';
+import { SetAvatar } from "../../components/set-avatar/SetAvatar";
 
 export const Profile = () => {
-  return <div>Profile</div>;
+  return (
+    <div>
+      <SetAvatar />
+    </div>
+  );
 };

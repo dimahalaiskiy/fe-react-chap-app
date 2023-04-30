@@ -1,5 +1,5 @@
-import React from 'react';
-import { SpinnerContainer, SpinnerStyled } from './spinner.styled';
+import React from "react";
+import { SpinnerContainer, SpinnerStyled } from "./spinner.styled";
 
 export interface SpinnerProps {
   margin?: string | undefined;
