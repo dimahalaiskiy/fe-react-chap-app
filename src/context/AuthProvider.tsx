@@ -7,14 +7,14 @@ interface AuthProvider {
 }
 
 export interface AuthContext {
-  isAuthenticated: boolean | undefined;
-  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+  isAuthenticated: boolean | null | undefined;
+  setIsAuthenticated: Dispatch<SetStateAction<boolean | null | undefined>>;
 }
 
 export const AuthContext = createContext<AuthContext | null>(null);
 
 export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null | undefined>(null);
   const navigate = useNavigate();
 
   const getUserSession = async () => {
