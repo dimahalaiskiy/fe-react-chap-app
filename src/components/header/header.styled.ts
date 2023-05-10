@@ -41,6 +41,7 @@ export const HeaderLinkContent = styled.span`
 
 export const LogoutButton = styled.button`
   cursor: pointer;
+  display: flex;
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
