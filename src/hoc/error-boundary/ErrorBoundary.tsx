@@ -29,11 +29,11 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <ErrorBoundaryWrapper>
-          {/* <Typography>Something went wrong.</Typography> */}
           <Button>
             <Link to="/home">Go back to the home page</Link>
             <p>sdasdsaasasdsa</p>
           </Button>
+          <h1>Error</h1>
         </ErrorBoundaryWrapper>
       );
     }

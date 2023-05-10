@@ -15,6 +15,10 @@ interface AuthProvider {
 
 export interface AuthContext {
   isAuthenticated: boolean | null | undefined;
+  userProfile: {
+    nickname: string;
+    email: string;
+  };
   setIsAuthenticated: Dispatch<SetStateAction<boolean | null | undefined>>;
 }
 
@@ -24,12 +28,24 @@ export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<
     boolean | null | undefined
   >(null);
+
+  const [userProfile, setUserProfile] = useState({
+    nickname: "",
+    email: "",
+  });
+
   const navigate = useNavigate();
 
   const getUserSession = async () => {
     try {
       const { data } = await api.post("auth/protected");
-      if (data.user) setIsAuthenticated(true);
+      if (data.user) {
+        setUserProfile({
+          nickname: data.user.nickname,
+          email: data.user.email,
+        });
+        setIsAuthenticated(true);
+      }
     } catch (error) {
       console.log("error", error);
       setIsAuthenticated(false);
@@ -41,7 +57,9 @@ export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, userProfile }}
+    >
       {children}
     </AuthContext.Provider>
   );
