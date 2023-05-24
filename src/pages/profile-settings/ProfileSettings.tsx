@@ -25,9 +25,7 @@ export const ProfileSettings = () => {
   const setProfileData = async () => {
     if (selectedFile) {
       const formData = new FormData();
-      formData.append("image", selectedFile); // Use "image" as the form field name
-      console.log("formData", formData);
-
+      formData.append("image", selectedFile);
       try {
         const response = await api.post("/user/avatar", formData, {
           headers: {
