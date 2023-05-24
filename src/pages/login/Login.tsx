@@ -25,7 +25,7 @@ export const Login: React.FC = () => {
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    registerUser();
+    loginUser();
   };
 
   const handleInputKeyDown = (event: any) => {
@@ -35,14 +35,14 @@ export const Login: React.FC = () => {
     }
   };
 
-  const registerUser = async () => {
+  const loginUser = async () => {
     setIsLoading(true);
     try {
-      const response = await api.post("/auth/login", {
+      const { data } = await api.post("/auth/login", {
         email,
         password,
       });
-      if (response.data === "OK") {
+      if (data?.user) {
         setIsAuthenticated(true);
         navigate("/");
       }
@@ -86,7 +86,7 @@ export const Login: React.FC = () => {
           type="submit"
           margin="18px 0px 0px 0px"
           disabled={!isValidForm}
-          onClick={registerUser}
+          onClick={loginUser}
           text="Join"
         >
           {isLoading && <Spinner margin="0px 0px 0px 20px" />}

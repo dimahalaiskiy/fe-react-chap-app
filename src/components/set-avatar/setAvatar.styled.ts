@@ -9,10 +9,11 @@ export const SetAvatarWrapper = styled.div`
 `;
 
 export const SetAvatarHeading = styled.h4`
+  margin-bottom: 18px;
   text-align: center;
   font-weight: 600;
-  font-size: 14px;
-  line-height: 38px;
+  font-size: 16px;
+  line-height: 18px;
   color: #f3f3f3;
 `;
 

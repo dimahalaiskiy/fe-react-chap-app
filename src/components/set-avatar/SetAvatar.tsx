@@ -8,8 +8,13 @@ import {
 } from "./setAvatar.styled";
 import { Button } from "../button/Button";
 
-export const SetAvatar = () => {
-  const [image, setImage] = useState<string>("");
+interface SetAvatar {
+  setFile: React.Dispatch<React.SetStateAction<string | Blob>>;
+  avatar: string | null | undefined;
+}
+
+export const SetAvatar: React.FC<SetAvatar> = ({ setFile, avatar }) => {
+  const [image, setImage] = useState(avatar || "");
   const hiddenInput = useRef<HTMLInputElement>(null);
 
   const handleClickOnInput = () => {
@@ -20,7 +25,9 @@ export const SetAvatar = () => {
     const file = event.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
       const img = URL.createObjectURL(file);
+      console.log("file", file);
       setImage(img);
+      setFile(file);
     } else {
       alert("Please select an image file.");
     }
