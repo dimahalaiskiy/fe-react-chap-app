@@ -18,6 +18,7 @@ export interface AuthContext {
   userProfile: {
     nickname: string;
     email: string;
+    avatar?: string | null;
   };
   setIsAuthenticated: Dispatch<SetStateAction<boolean | null | undefined>>;
 }
@@ -32,6 +33,7 @@ export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
   const [userProfile, setUserProfile] = useState({
     nickname: "",
     email: "",
+    avatar: null,
   });
 
   const navigate = useNavigate();
@@ -43,6 +45,7 @@ export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
         setUserProfile({
           nickname: data.user.nickname,
           email: data.user.email,
+          avatar: data.user.avatar,
         });
         setIsAuthenticated(true);
       }
