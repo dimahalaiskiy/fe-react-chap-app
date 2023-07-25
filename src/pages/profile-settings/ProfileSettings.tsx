@@ -41,7 +41,7 @@ export const ProfileSettings = () => {
 
   return (
     <ProfileSettingsWrapper>
-      <SetAvatar avatar={userProfile.avatar} setFile={setSelectedFile} />
+      <SetAvatar avatar={userProfile?.avatar} setFile={setSelectedFile} />
       <ChangeNicknameWrapper>
         <Input label="nickname" value={userName} setValue={changeUserName} />
         <Button

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import ErrorBoundary from "./hoc/error-boundary/ErrorBoundary";
 import { AuthProvider } from "./context/AuthProvider";
@@ -43,6 +44,7 @@ export const App = () => {
           </Routes>
         </AuthProvider>
       </BrowserRouter>
+      <Toaster />
     </ErrorBoundary>
   );
 };

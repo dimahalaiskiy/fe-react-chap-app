@@ -13,14 +13,17 @@ interface AuthProvider {
   children: ReactNode;
 }
 
+export interface UserProfile {
+  nickname: string;
+  email: string;
+  avatar: string | null;
+}
+
 export interface AuthContext {
   isAuthenticated: boolean | null | undefined;
-  userProfile: {
-    nickname: string;
-    email: string;
-    avatar?: string | null;
-  };
   setIsAuthenticated: Dispatch<SetStateAction<boolean | null | undefined>>;
+  userProfile: UserProfile;
+  setUserProfile: Dispatch<SetStateAction<UserProfile>>;
 }
 
 export const AuthContext = createContext<AuthContext | null>(null);
@@ -33,7 +36,7 @@ export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
   const [userProfile, setUserProfile] = useState({
     nickname: "",
     email: "",
-    avatar: null,
+    avatar: "",
   });
 
   const navigate = useNavigate();
@@ -42,10 +45,11 @@ export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
     try {
       const { data } = await api.post("auth/protected");
       if (data.user) {
+        console.log("setting profile data...");
         setUserProfile({
-          nickname: data.user.nickname,
-          email: data.user.email,
-          avatar: data.user.avatar,
+          nickname: data?.user?.nickname,
+          email: data?.user?.email,
+          avatar: data?.user?.avatar,
         });
         setIsAuthenticated(true);
       }
@@ -61,7 +65,12 @@ export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, userProfile }}
+      value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        userProfile,
+        setUserProfile,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -18,7 +18,7 @@ export const Login: React.FC = () => {
   const [isValidEmail, setIsValidEmail] = useState(true);
 
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated } = useContext(
+  const { isAuthenticated, setIsAuthenticated, setUserProfile } = useContext(
     AuthContext
   ) as AuthContext;
   const isValidForm = emailValidator(email) && password.length >= 1;
@@ -42,10 +42,13 @@ export const Login: React.FC = () => {
         email,
         password,
       });
-      if (data?.user) {
-        setIsAuthenticated(true);
-        navigate("/");
-      }
+      setIsAuthenticated(true);
+      setUserProfile({
+        nickname: data.user.nickname,
+        email: data.user.email,
+        avatar: data.user.avatar,
+      });
+      navigate("/");
     } catch (error) {
       console.log("error", error);
       setIsAuthenticated(false);
@@ -60,7 +63,7 @@ export const Login: React.FC = () => {
 
   return (
     <Wrapper>
-      <Form onSubmit={(e: FormEvent) => handleInputKeyDown(e)}>
+      <Form onSubmit={(event: FormEvent) => handleInputKeyDown(event)}>
         <Input
           type="email"
           margin="0px 0px 18px 0px"
@@ -84,10 +87,10 @@ export const Login: React.FC = () => {
         />
         <Button
           type="submit"
+          text="Join"
           margin="18px 0px 0px 0px"
           disabled={!isValidForm}
           onClick={loginUser}
-          text="Join"
         >
           {isLoading && <Spinner margin="0px 0px 0px 20px" />}
         </Button>

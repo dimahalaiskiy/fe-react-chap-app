@@ -1,5 +1,6 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import api from "../../services/api/core";
 import { emailValidator } from "../../utils/helpers/validateEmail";
@@ -20,14 +21,19 @@ export const SignUp: React.FC = () => {
   const [isMatchedPassword, setIsMatchPasswords] = useState(true);
 
   const navigate = useNavigate();
+
   const handleChangeRepeatedPassword = (
     event: ChangeEvent<HTMLInputElement>
   ) => {
     setRepeatedPassword(event.currentTarget.value);
-    if (password !== event.currentTarget.value) {
-      setIsMatchPasswords(false);
-    } else {
-      setIsMatchPasswords(true);
+    setIsMatchPasswords(password === event.currentTarget.value);
+  };
+
+  const handleInputKeyDown = (e: any) => {
+    e.preventDefault();
+    if (e.key === "Enter") {
+      console.log("pressing enter..");
+      registerUser();
     }
   };
 
@@ -43,10 +49,11 @@ export const SignUp: React.FC = () => {
         password,
       });
       if (data.statusText === "Created") {
-        navigate("/home");
+        toast.success("Profile created");
+        navigate("/login");
       }
-    } catch (error) {
-      console.log("error", error);
+    } catch (error: any) {
+      toast.error(error.response.data);
     } finally {
       setIsLoading(false);
     }
@@ -54,7 +61,7 @@ export const SignUp: React.FC = () => {
 
   return (
     <Wrapper>
-      <Form>
+      <Form onSubmit={(e: FormEvent) => handleInputKeyDown(e)}>
         <Input
           margin="0px 0px 18px 0px"
           label="nickname"
@@ -94,10 +101,11 @@ export const SignUp: React.FC = () => {
           setValue={handleChangeRepeatedPassword}
         />
         <Button
+          type="submit"
+          text="Sign up"
           margin="18px 0px 0px 0px"
           disabled={!isValidForm}
           onClick={registerUser}
-          text="Sign up"
         >
           {isLoading && <Spinner margin="0px 0px 0px 20px" />}
         </Button>
