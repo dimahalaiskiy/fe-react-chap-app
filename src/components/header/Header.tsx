@@ -3,6 +3,8 @@ import { Link, useNavigate, useMatch } from "react-router-dom";
 import api from "../../services/api/core";
 
 import { AuthContext } from "../../context/AuthProvider";
+import { SearchBar } from "../search-bar/SearchBar";
+
 import Spinner from "../spinner/Spinner";
 
 import {
@@ -56,6 +58,7 @@ export const Header = () => {
           </Link>
         )}
       </HeaderLinkWrapper>
+      <SearchBar />
       <HeaderLinkWrapper style={{ justifyContent: "flex-end" }}>
         <LogoutButton onClick={onLogout}>
           Logout

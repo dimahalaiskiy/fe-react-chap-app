@@ -3,11 +3,12 @@ import styled from "styled-components";
 export const ProfileSettingsWrapper = styled.section`
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   gap: 28px;
 `;
 
 export const ChangeNicknameWrapper = styled.div`
+  margin-left: 12%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;

@@ -8,8 +8,9 @@ interface InputProps {
   setValue: (event: ChangeEvent<HTMLInputElement>) => void;
   error?: boolean;
   errorMessage?: string;
-  label: string;
+  label?: string;
   margin?: string;
+  placeholder?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -19,19 +20,23 @@ export const Input: React.FC<InputProps> = ({
   value,
   setValue,
   label,
+  placeholder = "",
   margin,
 }) => {
   return (
     <InputWrapper style={{ margin: margin }}>
-      <Label error={error}>
-        {label}
-        {error ? <ErrorTip>{errorMessage}</ErrorTip> : ""}
-      </Label>
+      {label && (
+        <Label error={error}>
+          {label}
+          {error ? <ErrorTip>{errorMessage}</ErrorTip> : ""}
+        </Label>
+      )}
       <InputStyled
         error={error}
         type={type}
         value={value}
         onChange={setValue}
+        placeholder={placeholder}
       />
     </InputWrapper>
   );

@@ -10,7 +10,7 @@ export const InputWrapper = styled.div`
 `;
 
 export const Label = styled.p<ErrorProps>`
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   font-weight: 600;
   font-size: 16px;
   line-height: 18px;
@@ -47,5 +47,8 @@ export const InputStyled = styled.input<ErrorProps>`
       error
         ? "1px solid rgba(235, 87, 87, 0.16);"
         : "1px solid rgba(255, 255, 255, 0.16)"};
+  }
+  :-internal-autofill-selected: {
+    background-color: transparent;
   }
 `;

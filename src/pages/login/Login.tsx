@@ -1,5 +1,6 @@
 import React, { useState, FormEvent, useContext } from "react";
 import { useNavigate, Link, Navigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import { emailValidator } from "../../utils/helpers/validateEmail";
 import api from "../../services/api/core";
@@ -49,8 +50,8 @@ export const Login: React.FC = () => {
         avatar: data.user.avatar,
       });
       navigate("/");
-    } catch (error) {
-      console.log("error", error);
+    } catch (error: any) {
+      toast.error(error);
       setIsAuthenticated(false);
     } finally {
       setIsLoading(false);

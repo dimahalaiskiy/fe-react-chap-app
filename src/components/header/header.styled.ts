@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const HeaderWrapper = styled.header`
   width: 100%;
-  height: 64px;
+  height: inherit;
   margin-bottom: 40px;
-  padding: 12px 0px;
+  padding: 24px 0px;
   display: flex;
-  justify-content: space-beetwen;
+  justify-content: space-between;
   background-color: transparent;
   align-items: center;
 `;

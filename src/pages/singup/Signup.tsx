@@ -3,12 +3,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import api from "../../services/api/core";
+
 import { emailValidator } from "../../utils/helpers/validateEmail";
 
 import { Form } from "./signup.styled";
 import { Input } from "../../components/input/Input";
 import { Button } from "../../components/button/Button";
 import { Wrapper, Text } from "../login/login.styled";
+
 import Spinner from "../../components/spinner/Spinner";
 
 export const SignUp: React.FC = () => {
