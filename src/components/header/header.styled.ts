@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const HeaderWrapper = styled.header`
   width: 100%;
   height: inherit;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   padding: 24px 0px;
   display: flex;
   justify-content: space-between;

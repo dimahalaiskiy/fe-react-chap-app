@@ -1,31 +1,30 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
-import api from "../../services/api/core";
+import { CoreApiProvider } from '../../services/api';
+import { emailValidator } from '../../utils/validateEmail';
 
-import { emailValidator } from "../../utils/helpers/validateEmail";
+import { Form } from './signup.styled';
+import { Input } from '../../components/input/Input';
+import { Button } from '../../components/button/Button';
+import { Wrapper, Text } from '../login/login.styled';
 
-import { Form } from "./signup.styled";
-import { Input } from "../../components/input/Input";
-import { Button } from "../../components/button/Button";
-import { Wrapper, Text } from "../login/login.styled";
-
-import Spinner from "../../components/spinner/Spinner";
+import Spinner from '../../components/spinner/Spinner';
 
 export const SignUp: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
-  const [password, setPassword] = useState("");
-  const [repeatedPassword, setRepeatedPassword] = useState("");
+  const [password, setPassword] = useState('');
+  const [repeatedPassword, setRepeatedPassword] = useState('');
   const [isMatchedPassword, setIsMatchPasswords] = useState(true);
 
   const navigate = useNavigate();
 
   const handleChangeRepeatedPassword = (
-    event: ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement>,
   ) => {
     setRepeatedPassword(event.currentTarget.value);
     setIsMatchPasswords(password === event.currentTarget.value);
@@ -33,8 +32,8 @@ export const SignUp: React.FC = () => {
 
   const handleInputKeyDown = (e: any) => {
     e.preventDefault();
-    if (e.key === "Enter") {
-      console.log("pressing enter..");
+    if (e.key === 'Enter') {
+      console.log('pressing enter..');
       registerUser();
     }
   };
@@ -45,14 +44,14 @@ export const SignUp: React.FC = () => {
   const registerUser = async () => {
     setIsLoading(true);
     try {
-      const data = await api.post("/auth/register", {
+      const data = await CoreApiProvider.register({
         email,
         nickname,
         password,
       });
-      if (data.statusText === "Created") {
-        toast.success("Profile created");
-        navigate("/login");
+      if (data.statusText === 'Created') {
+        toast.success('Profile created');
+        navigate('/login');
       }
     } catch (error: any) {
       toast.error(error.response.data);

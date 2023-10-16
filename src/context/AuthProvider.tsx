@@ -1,62 +1,39 @@
-import React, {
-  createContext,
-  ReactNode,
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-} from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../services/api/core";
+import React, { createContext, ReactNode, useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CoreApiProvider } from '../services/api';
+import { User } from '../types';
 
 interface AuthProvider {
   children: ReactNode;
 }
 
-export interface UserProfile {
-  nickname: string;
-  email: string;
-  avatar: string | null;
-}
-
 export interface AuthContext {
   isAuthenticated: boolean | null | undefined;
   setIsAuthenticated: Dispatch<SetStateAction<boolean | null | undefined>>;
-  userProfile: UserProfile;
-  setUserProfile: Dispatch<SetStateAction<UserProfile>>;
+  userProfile: User;
+  setUserProfile: Dispatch<SetStateAction<User>>;
 }
 
 export const AuthContext = createContext<AuthContext | null>(null);
 
 export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<
-    boolean | null | undefined
-  >(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null | undefined>(null);
 
-  const [userProfile, setUserProfile] = useState({
-    nickname: "",
-    email: "",
-    avatar: "",
-  });
+  const [userProfile, setUserProfile] = useState({ nickname: '', email: '', avatar: '' } as User);
 
   const navigate = useNavigate();
 
   const getUserSession = async () => {
     try {
-      const { data } = await api.post("auth/protected");
-      if (data.user) {
-        console.log("setting profile data...");
-        setUserProfile({
-          nickname: data?.user?.nickname,
-          email: data?.user?.email,
-          avatar: data?.user?.avatar,
-        });
-        setIsAuthenticated(true);
-      }
+      const { data } = await CoreApiProvider.protected();
+      console.log('data', data);
+      const { nickname, email, avatar } = data.user;
+      setUserProfile({ nickname, email, avatar });
+      setIsAuthenticated(true);
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
       setIsAuthenticated(false);
-      navigate("/login");
+      navigate('/login');
     }
   };
   useEffect(() => {

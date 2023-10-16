@@ -1,26 +1,26 @@
-import React, { useState, FormEvent, useContext } from "react";
-import { useNavigate, Link, Navigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import React, { useState, FormEvent, useContext } from 'react';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
-import { emailValidator } from "../../utils/helpers/validateEmail";
-import api from "../../services/api/core";
-import { AuthContext } from "../../context/AuthProvider";
+import { emailValidator } from '../../utils/validateEmail';
+import { AuthContext } from '../../context/AuthProvider';
+import { CoreApiProvider } from '../../services/api';
 
-import { Input } from "../../components/input/Input";
-import { Button } from "../../components/button/Button";
-import Spinner from "../../components/spinner/Spinner";
+import { Input } from '../../components/input/Input';
+import { Button } from '../../components/button/Button';
+import Spinner from '../../components/spinner/Spinner';
 
-import { Wrapper, Form, Text } from "./login.styled";
+import { Wrapper, Form, Text } from './login.styled';
 
 export const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
 
   const navigate = useNavigate();
   const { isAuthenticated, setIsAuthenticated, setUserProfile } = useContext(
-    AuthContext
+    AuthContext,
   ) as AuthContext;
   const isValidForm = emailValidator(email) && password.length >= 1;
 
@@ -31,7 +31,7 @@ export const Login: React.FC = () => {
 
   const handleInputKeyDown = (event: any) => {
     event.preventDefault();
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       handleSubmit(event);
     }
   };
@@ -39,17 +39,16 @@ export const Login: React.FC = () => {
   const loginUser = async () => {
     setIsLoading(true);
     try {
-      const { data } = await api.post("/auth/login", {
-        email,
-        password,
-      });
+      const {
+        data: { user },
+      } = await CoreApiProvider.login({ email, password });
       setIsAuthenticated(true);
       setUserProfile({
-        nickname: data.user.nickname,
-        email: data.user.email,
-        avatar: data.user.avatar,
+        nickname: user.nickname,
+        email: user.email,
+        avatar: user.avatar,
       });
-      navigate("/");
+      navigate('/');
     } catch (error: any) {
       toast.error(error);
       setIsAuthenticated(false);

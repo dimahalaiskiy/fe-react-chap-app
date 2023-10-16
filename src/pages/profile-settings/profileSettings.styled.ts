@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ProfileSettingsWrapper = styled.section`
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   gap: 28px;
 `;
 

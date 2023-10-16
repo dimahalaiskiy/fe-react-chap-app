@@ -1,10 +1,9 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
-import { ButtonStyled } from "./button.styled";
-
+import { ButtonStyled } from './button.styled';
 interface ButtonProps {
   disabled?: boolean;
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   text?: string;
   onClick?: any;
   children?: ReactNode;
@@ -26,6 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <ButtonStyled
+      whileTap={{ scale: 0.97 }}
       type={type}
       margin={margin}
       disabled={disabled}
