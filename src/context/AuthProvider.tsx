@@ -1,32 +1,23 @@
-import React, { createContext, ReactNode, useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, { createContext, ReactNode, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CoreApiProvider } from '../services/api';
-import { User } from '../types';
+import { User, AuthContext as IAuthContext } from '../types';
 
 interface AuthProvider {
   children: ReactNode;
 }
 
-export interface AuthContext {
-  isAuthenticated: boolean | null | undefined;
-  setIsAuthenticated: Dispatch<SetStateAction<boolean | null | undefined>>;
-  userProfile: User;
-  setUserProfile: Dispatch<SetStateAction<User>>;
-}
-
-export const AuthContext = createContext<AuthContext | null>(null);
+export const AuthContext = createContext<IAuthContext | null>(null);
 
 export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null | undefined>(null);
-
   const [userProfile, setUserProfile] = useState({ nickname: '', email: '', avatar: '' } as User);
 
   const navigate = useNavigate();
 
-  const getUserSession = async () => {
+  const getUserSession = useCallback(async () => {
     try {
       const { data } = await CoreApiProvider.protected();
-      console.log('data', data);
       const { nickname, email, avatar } = data.user;
       setUserProfile({ nickname, email, avatar });
       setIsAuthenticated(true);
@@ -35,7 +26,8 @@ export const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
       setIsAuthenticated(false);
       navigate('/login');
     }
-  };
+  }, []);
+
   useEffect(() => {
     getUserSession();
   }, []);

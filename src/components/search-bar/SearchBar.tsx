@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef, ChangeEvent } from 'react';
-import { useAnimate, stagger, motion } from 'framer-motion';
+import { useAnimate, stagger } from 'framer-motion';
 import debounce from 'lodash.debounce';
 
 import { CoreApiProvider } from '../../services/api';
