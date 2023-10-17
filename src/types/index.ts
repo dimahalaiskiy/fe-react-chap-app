@@ -1,10 +1,17 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from "react";
 
 export interface User {
+  _id?: string;
+  createdAt?: string;
   nickname?: string;
   password?: string;
   email?: string;
   avatar?: string;
+}
+
+export interface UserResponse extends User {
+  rows: User[] | [];
+  count: number | null;
 }
 
 export interface AuthContext {

@@ -1,12 +1,10 @@
-import { motion } from "framer-motion";
 import styled from "styled-components";
 
 export const SearchBarWrapper = styled.section`
   background-color: transparent;
   cursor: pointer;
 `;
-
-export const InputWrapper = styled(motion.div)`
+export const InputWrapper = styled.div`
   position: relative;
   display: flex;
   min-width: 285px;
@@ -25,22 +23,18 @@ export const SearchBarInput = styled.input`
   font-size: 14px;
   line-height: 16px;
   color: #ffffff;
-  cursor: pointer;
   ::placeholder {
-    cursor: pointer;
     font-size: 12px;
   }
 `;
-
-export const Search = styled.span`
+export const Search = styled.button`
   cursor: pointer;
   color: #373530;
   :hover {
     color: white;
   }
 `;
-
-export const SearchResults = styled(motion.ul)`
+export const SearchResults = styled.ul`
   position: absolute;
   margin-top: 8px;
   min-height: 250px;
