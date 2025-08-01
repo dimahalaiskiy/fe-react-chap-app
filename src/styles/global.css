@@ -28,7 +28,43 @@ a {
   text-decoration: none;
 }
 
+ul {
+  margin: 0;
+  padding: 0
+}
+
+li {
+  list-style: none;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition: background-color 0s 600000s, color 0s 600000s;
+}
+
+#modal-root {
+  position: relative;
+}
+
+/* Change scrollbar appearance */
+
+html {
+  scrollbar-gutter: stable; /* Reserves space for the scrollbar even when it's not present */
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

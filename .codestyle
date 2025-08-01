@@ -1,0 +1,6 @@
+- use arrow functions only
+- use "@" alias for importing
+- use functional components instead of class components
+- use const for variables that don't change 
+- use enums if needed
+- don't import React from 'react'

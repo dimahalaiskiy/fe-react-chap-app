@@ -1,120 +1,180 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
+import { useNavigate, Link } from "react-router-dom";
+import { Formik, Form as FormikForm, Field, FormikHelpers } from "formik";
+import { CoreApiProvider } from "@/services/api";
 
-import { CoreApiProvider } from '../../services/api';
-import { emailValidator } from '../../utils/validateEmail';
+import { Form } from "./signup.styled";
+import { Input } from "@/components/input/Input";
+import { Button } from "@/components/button/Button";
+import { Wrapper, Text } from "@/pages/login/login.styled";
+import Spinner from "@/components/spinner/Spinner";
+import { useAuth } from "@/hooks/useAuth";
+import { showSuccessToast, showErrorToast } from "@/utils/toastUtils";
+import { SignupSchema } from "@/utils/schemas";
 
-import { Form } from './signup.styled';
-import { Input } from '../../components/input/Input';
-import { Button } from '../../components/button/Button';
-import { Wrapper, Text } from '../login/login.styled';
-
-import Spinner from '../../components/spinner/Spinner';
+interface SignupFormValues {
+  username: string;
+  displayName: string;
+  email: string;
+  location: string;
+  password: string;
+  confirmPassword: string;
+}
 
 export const SignUp: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(true);
-  const [password, setPassword] = useState('');
-  const [repeatedPassword, setRepeatedPassword] = useState('');
-  const [isMatchedPassword, setIsMatchPasswords] = useState(true);
-
   const navigate = useNavigate();
+  const { setIsAuthenticated, setUserProfile } = useAuth();
 
-  const handleChangeRepeatedPassword = (
-    event: ChangeEvent<HTMLInputElement>,
+  const initialValues: SignupFormValues = {
+    username: "",
+    displayName: "",
+    email: "",
+    location: "",
+    password: "",
+    confirmPassword: "",
+  };
+
+  const handleSubmit = async (
+    values: SignupFormValues,
+    { setSubmitting }: FormikHelpers<SignupFormValues>,
   ) => {
-    setRepeatedPassword(event.currentTarget.value);
-    setIsMatchPasswords(password === event.currentTarget.value);
-  };
-
-  const handleInputKeyDown = (e: any) => {
-    e.preventDefault();
-    if (e.key === 'Enter') {
-      console.log('pressing enter..');
-      registerUser();
-    }
-  };
-
-  const isValidForm =
-    nickname.length > 1 && emailValidator(email) && isMatchedPassword;
-
-  const registerUser = async () => {
-    setIsLoading(true);
     try {
-      const data = await CoreApiProvider.register({
-        email,
-        nickname,
-        password,
+      const {
+        data: { user },
+      } = await CoreApiProvider.register({
+        email: values.email,
+        username: values.username,
+        displayName: values.displayName,
+        location: values.location,
+        password: values.password,
       });
-      if (data.statusText === 'Created') {
-        toast.success('Profile created');
-        navigate('/login');
-      }
+
+      setIsAuthenticated(true);
+      setUserProfile({
+        id: user.id,
+        username: user.username,
+        displayName: user.displayName,
+        email: user.email,
+        avatar: user.avatar,
+        password: user.password,
+        createdAt: user.createdAt,
+        location: user.location,
+      });
+
+      showSuccessToast("Profile created successfully");
+      navigate("/");
     } catch (error: any) {
-      toast.error(error.response.data);
+      showErrorToast(error.response?.data.message || "Registration failed");
+      console.error("Registration error:", error);
     } finally {
-      setIsLoading(false);
+      setSubmitting(false);
     }
   };
 
   return (
     <Wrapper>
-      <Form onSubmit={(e: FormEvent) => handleInputKeyDown(e)}>
-        <Input
-          margin="0px 0px 18px 0px"
-          label="nickname"
-          value={nickname}
-          error={nickname.length !== 0 && nickname.length < 2}
-          errorMessage="min 2 symbol requires"
-          setValue={(e) => setNickname(e.currentTarget.value)}
-        />
-        <Input
-          type="email"
-          margin="0px 0px 18px 0px"
-          label="email"
-          value={email}
-          error={!isValidEmail}
-          errorMessage="invalid email"
-          setValue={(e) => {
-            setEmail(e.currentTarget.value);
-            if (!isValidEmail) setIsValidEmail(false);
-          }}
-        />
-        <Input
-          type="password"
-          margin="0px 0px 18px 0px"
-          label="password"
-          value={password}
-          error={password.length > 16}
-          errorMessage="max length is 16 symbols"
-          setValue={(e) => setPassword(e.currentTarget.value)}
-        />
-        <Input
-          type="password"
-          margin="0px 0px 18px 0px"
-          label="repeat password"
-          value={repeatedPassword}
-          error={!isMatchedPassword}
-          errorMessage="doesn't match"
-          setValue={handleChangeRepeatedPassword}
-        />
-        <Button
-          type="submit"
-          text="Sign up"
-          margin="18px 0px 0px 0px"
-          disabled={!isValidForm}
-          onClick={registerUser}
-        >
-          {isLoading && <Spinner margin="0px 0px 0px 20px" />}
-        </Button>
-        <Text>
-          <span>Already has account?</span>
-          <Link to="/login">Log In Here</Link>
-        </Text>
-      </Form>
+      <Formik initialValues={initialValues} validationSchema={SignupSchema} onSubmit={handleSubmit}>
+        {({ isSubmitting }) => (
+          <Form as={FormikForm}>
+            <Field name="username">
+              {({ field, meta }: any) => (
+                <Input
+                  margin="0px 0px 18px 0px"
+                  label="username"
+                  name="username"
+                  value={field.value}
+                  error={meta.touched && meta.error}
+                  errorMessage={meta.error}
+                  setValue={(e) => field.onChange(e)}
+                  onFocus={() => field.onBlur}
+                />
+              )}
+            </Field>
+            <Field name="displayName">
+              {({ field, meta }: any) => (
+                <Input
+                  margin="0px 0px 18px 0px"
+                  label="display name"
+                  name="displayName"
+                  value={field.value}
+                  error={meta.touched && meta.error}
+                  errorMessage={meta.error}
+                  setValue={(e) => field.onChange(e)}
+                  onFocus={() => field.onBlur}
+                />
+              )}
+            </Field>
+            <Field name="email">
+              {({ field, meta }: any) => (
+                <Input
+                  type="email"
+                  margin="0px 0px 18px 0px"
+                  label="email"
+                  name="email"
+                  value={field.value}
+                  error={meta.touched && meta.error}
+                  errorMessage={meta.error}
+                  setValue={(e) => field.onChange(e)}
+                  onFocus={() => field.onBlur}
+                />
+              )}
+            </Field>
+            <Field name="location">
+              {({ field, meta }: any) => (
+                <Input
+                  type="text"
+                  margin="0px 0px 18px 0px"
+                  label="location (optional)"
+                  name="location"
+                  value={field.value}
+                  error={meta.touched && meta.error}
+                  errorMessage={meta.error}
+                  setValue={(e) => field.onChange(e)}
+                  onFocus={() => field.onBlur}
+                />
+              )}
+            </Field>
+            <Field name="password">
+              {({ field, meta }: any) => (
+                <Input
+                  type="password"
+                  margin="0px 0px 18px 0px"
+                  label="password"
+                  name="password"
+                  value={field.value}
+                  error={meta.touched && meta.error}
+                  errorMessage={meta.error}
+                  setValue={(e) => field.onChange(e)}
+                  onFocus={() => field.onBlur}
+                />
+              )}
+            </Field>
+            <Field name="confirmPassword">
+              {({ field, meta }: any) => (
+                <Input
+                  type="password"
+                  margin="0px 0px 18px 0px"
+                  label="repeat password"
+                  name="confirmPassword"
+                  value={field.value}
+                  error={meta.touched && meta.error}
+                  errorMessage={meta.error}
+                  setValue={(e) => field.onChange(e)}
+                  onFocus={() => field.onBlur}
+                />
+              )}
+            </Field>
+            <Button type="submit" text="Sign up" margin="18px 0px 0px 0px" disabled={isSubmitting}>
+              {isSubmitting && <Spinner margin="0px 0px 0px 20px" />}
+            </Button>
+            <Text>
+              <span>Already has account?</span>
+              <button>
+                <Link to="/login">Login here</Link>
+              </button>
+            </Text>
+          </Form>
+        )}
+      </Formik>
     </Wrapper>
   );
 };

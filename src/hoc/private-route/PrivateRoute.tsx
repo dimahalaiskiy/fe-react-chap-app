@@ -1,14 +1,12 @@
-import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthProvider";
-import { AuthContext as IAuthContext } from "../../types";
+import { useAuth } from "@/hooks/useAuth";
 
 interface PathRouteProps {
   children?: React.ReactNode;
 }
 
 export const PrivateRoute: React.FC<PathRouteProps> = ({ children }) => {
-  const { isAuthenticated } = useContext(AuthContext) as IAuthContext;
+  const { isAuthenticated } = useAuth();
 
   if (isAuthenticated === null) return <></>;
 

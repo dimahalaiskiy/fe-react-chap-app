@@ -1,0 +1,6 @@
+{
+  "sid": "test-socket-id",
+  "upgrades": ["websocket"],
+  "pingInterval": 25000,
+  "pingTimeout": 5000
+} 

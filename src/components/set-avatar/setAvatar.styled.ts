@@ -5,6 +5,7 @@ interface ImageWrapper {
 }
 
 export const SetAvatarWrapper = styled.div`
+  position: relative;
   width: 120px;
 `;
 
@@ -36,8 +37,22 @@ export const ImageWrapper = styled.div<ImageWrapper>`
 
 export const Image = styled.img`
   border-radius: 50%;
+  object-fit: cover;
 `;
 
 export const HiddenInput = styled.input`
   display: none;
+`;
+
+export const CloseButton = styled.button`
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.4);
+  top: 24px;
+  right: 8px;
+  position: absolute;
+  background: transparent;
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  transition: color 0.2s ease-out;
 `;
