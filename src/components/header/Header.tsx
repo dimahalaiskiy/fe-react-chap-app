@@ -1,71 +1,82 @@
-import { useContext, useState } from "react";
-import { Link, useNavigate, useMatch } from "react-router-dom";
-import api from "../../services/api/core";
-
-import { AuthContext } from "../../context/AuthProvider";
-import Spinner from "../spinner/Spinner";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { CoreApiProvider } from "@/services/api";
+import { useAuth } from "@/hooks/useAuth";
+import { showErrorToast } from "@/utils/toastUtils";
 
 import {
   HeaderWrapper,
-  HeaderLinkWrapper,
-  HeaderLinkContent,
-  LogoutButton,
+  Heading,
+  LogoButton,
+  ProfileContainer,
+  ProfileButton,
 } from "./header.styled";
-
-import { ReactComponent as ProfileIcon } from "../../assets/profile.svg";
-import { ReactComponent as HomeIcon } from "../../assets/home.svg";
-import { ReactComponent as LogoutIcon } from "../../assets/logout.svg";
+import { Dropdown, DropdownWrapper } from "@/components/dropdown/Dropdown";
+import { SocketStatus } from "@/components/socket-status";
+import { Avatar } from "@/components/avatar/Avatar";
 
 export const Header = () => {
-  const { setIsAuthenticated } = useContext(AuthContext) as AuthContext;
+  const { setIsAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   const [isWaitingForLogout, setIsWaitingForLogout] = useState(false);
-
-  const isProfilePage = useMatch("/profile");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const onLogout = async () => {
     setIsWaitingForLogout(true);
     try {
-      await api.post("auth/logout");
+      await CoreApiProvider.logout();
       setIsAuthenticated(false);
       navigate("/login");
     } catch (error) {
-      console.log("error", error);
+      showErrorToast("Error logging out");
     } finally {
       setIsWaitingForLogout(false);
     }
   };
 
+  const handleProfileClick = () => {
+    navigate("/profile");
+    setIsDropdownOpen(false);
+  };
+
+  const toggleDropdown = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
+
+  const dropdownItems = [
+    {
+      label: "Profile",
+      onClick: handleProfileClick,
+      hasBorder: true,
+    },
+    {
+      label: isWaitingForLogout ? "Logging out..." : "Logout",
+      onClick: onLogout,
+      isDisabled: isWaitingForLogout,
+    },
+  ];
+
   return (
     <HeaderWrapper>
-      <HeaderLinkWrapper>
-        {isProfilePage ? (
-          <Link to="/">
-            <HomeIcon fill="white" />
-            <HeaderLinkContent style={{ marginLeft: "10px" }}>
-              Home
-            </HeaderLinkContent>
-          </Link>
-        ) : (
-          <Link to="/profile">
-            <ProfileIcon fill="white" />
-            <HeaderLinkContent style={{ marginLeft: "10px" }}>
-              My Profile
-            </HeaderLinkContent>
-          </Link>
-        )}
-      </HeaderLinkWrapper>
-      <HeaderLinkWrapper style={{ justifyContent: "flex-end" }}>
-        <LogoutButton onClick={onLogout}>
-          Logout
-          {isWaitingForLogout ? (
-            <Spinner margin="0px 0px 0px 10px" />
-          ) : (
-            <LogoutIcon fill="white" style={{ marginLeft: "10px" }} />
-          )}
-        </LogoutButton>
-      </HeaderLinkWrapper>
+      <LogoButton onClick={() => navigate("/")}>
+        <img src="logo.png" alt="logo" width="44" height="44" />
+        <Heading>Chat App</Heading>
+      </LogoButton>
+      <ProfileContainer>
+        <SocketStatus />
+        <DropdownWrapper>
+          <ProfileButton onClick={(e) => toggleDropdown(e)} id="profile-button">
+            <Avatar user={user} size={40} />
+          </ProfileButton>
+          <Dropdown isOpen={isDropdownOpen} items={dropdownItems} onClose={closeDropdown} />
+        </DropdownWrapper>
+      </ProfileContainer>
     </HeaderWrapper>
   );
 };

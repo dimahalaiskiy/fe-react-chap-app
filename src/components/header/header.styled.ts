@@ -2,41 +2,38 @@ import styled from "styled-components";
 
 export const HeaderWrapper = styled.header`
   width: 100%;
-  height: 64px;
-  margin-bottom: 40px;
-  padding: 12px 0px;
+  height: inherit;
+  margin-bottom: 20px;
+  @media (max-width: 1024px) {
+    margin-bottom: 20px;
+  }
+  padding: 24px 0px;
   display: flex;
-  justify-content: space-beetwen;
+  justify-content: space-between;
   background-color: transparent;
   align-items: center;
 `;
 
-export const HeaderLinkWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  > a {
-    > svg {
-      transition: 0.1s linear;
-    }
-    > span {
-      transition: 0.1s linear;
-    }
-    :hover {
-      > svg {
-        fill: rgba(255, 255, 255, 0.6);
-      }
-      > span {
-        color: rgba(255, 255, 255, 0.6);
-      }
-    }
-  }
+export const Heading = styled.h2`
+  font-weight: 500;
+  font-size: 24px;
+  color: white;
 `;
 
-export const HeaderLinkContent = styled.span`
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 22px;
-  color: #ffffff;
+export const LogoButton = styled.button`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+`;
+
+export const ProfileContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: flex-end;
 `;
 
 export const LogoutButton = styled.button`
@@ -56,4 +53,8 @@ export const LogoutButton = styled.button`
       fill: rgba(255, 255, 255, 0.6);
     }
   }
+`;
+
+export const ProfileButton = styled.button`
+  cursor: pointer;
 `;

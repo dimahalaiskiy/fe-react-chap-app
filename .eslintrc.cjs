@@ -4,7 +4,6 @@ module.exports = {
     es2021: true,
     node: true,
   },
-
   extends: [
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
@@ -24,14 +23,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: [
-    "@typescript-eslint",
-    "react",
-    "react-hooks",
-    "import",
-    "jsx-a11y",
-    "prettier",
-  ],
+  plugins: ["@typescript-eslint", "react", "react-hooks", "import", "jsx-a11y", "prettier"],
   rules: {
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -47,13 +39,26 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
+        printWidth: 100,
         endOfLine: "auto",
       },
     ],
+    "import/no-unresolved": "error",
+    "import/namespace": "off",
   },
   settings: {
     react: {
       version: "detect",
+    },
+    "import/resolver": {
+      typescript: {
+        alwaysTryTypes: true,
+        project: "./tsconfig.json",
+      },
+      node: {
+        paths: ["src"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
     },
   },
 };

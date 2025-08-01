@@ -1,12 +1,11 @@
 import React, { ReactNode } from "react";
 
 import { ButtonStyled } from "./button.styled";
-
 interface ButtonProps {
   disabled?: boolean;
   type?: "button" | "submit" | "reset" | undefined;
   text?: string;
-  onClick?: any;
+  onClick?: () => void;
   children?: ReactNode;
   margin?: string;
   padding?: string;

@@ -1,7 +1,8 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
-import { ErrorBoundaryWrapper } from "./errorBoundary.styled";
-import { Button } from "../../components/button/Button";
+/* eslint-disable react/no-direct-mutation-state */
+import { Component, ErrorInfo, ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { ErrorBoundaryText, ErrorBoundaryWrapper } from "./errorBoundary.styled";
+import { Button } from "@/components/button/Button";
 
 interface Props {
   children: ReactNode;
@@ -15,6 +16,7 @@ class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
+    this.resetError = this.resetError.bind(this);
   }
 
   static getDerivedStateFromError(_: Error): State {
@@ -25,15 +27,18 @@ class ErrorBoundary extends Component<Props, State> {
     console.error(error, errorInfo);
   }
 
+  resetError = () => {
+    this.state = { hasError: false };
+  };
+
   render(): ReactNode {
     if (this.state.hasError) {
       return (
         <ErrorBoundaryWrapper>
-          <Button>
-            <Link to="/home">Go back to the home page</Link>
-            <p>sdasdsaasasdsa</p>
+          <ErrorBoundaryText>Ooops. Something went wrong.</ErrorBoundaryText>
+          <Button onClick={this.resetError}>
+            <Link to="/">Go back home page</Link>
           </Button>
-          <h1>Error</h1>
         </ErrorBoundaryWrapper>
       );
     }

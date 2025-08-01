@@ -1,11 +1,10 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
   NotFoundWrapper,
   NotFoundText,
   NotFoundContent,
 } from "./notFound.styled";
-import { Button } from "../../components/button/Button";
+import { Button } from "@/components/button/Button";
 
 export const NotFound = () => {
   const navigate = useNavigate();
